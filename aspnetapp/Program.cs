@@ -33,13 +33,10 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapRazorPages();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.EnablePersistAuthorization();
-    });
-}
+    c.EnablePersistAuthorization();
+});
 
 app.Run();
