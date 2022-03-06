@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using aspnetapp;
 
 namespace aspnetapp
 {
@@ -35,9 +36,12 @@ namespace aspnetapp
             modelBuilder.UseCollation("utf8_general_ci")
                 .HasCharSet("utf8");
             modelBuilder.Entity<Counter>().ToTable("Counters");
+            modelBuilder.Entity<Menu>().ToTable("Menus");
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<aspnetapp.Menu> Menu { get; set; }
     }
 }
