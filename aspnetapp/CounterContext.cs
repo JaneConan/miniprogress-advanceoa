@@ -12,6 +12,7 @@ namespace aspnetapp
         {
         }
         public DbSet<Counter> Counters { get; set; } = null!;
+        public DbSet<Menu> Menus { get; set; } = null!;
         public CounterContext(DbContextOptions<CounterContext> options)
             : base(options)
         {
