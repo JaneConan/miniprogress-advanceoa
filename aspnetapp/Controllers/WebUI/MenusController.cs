@@ -22,7 +22,7 @@ namespace aspnetapp.Controllers
         // GET: Menus
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Menu.ToListAsync());
+            return View(await _context.Menu.AsNoTracking().ToListAsync());
         }
 
         // GET: Menus/Details/5
@@ -54,10 +54,12 @@ namespace aspnetapp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,MenuName,MenuEname,MenuDetail,icon,createdAt,updatedAt")] Menu menu)
+        public async Task<IActionResult> Create([Bind("id,MenuName,MenuEname,MenuDetail,icon")] Menu menu)
         {
             if (ModelState.IsValid)
             {
+                menu.createdAt = DateTime.Now;
+                menu.updatedAt = DateTime.Now;
                 _context.Add(menu);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +88,7 @@ namespace aspnetapp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,MenuName,MenuEname,MenuDetail,icon,createdAt,updatedAt")] Menu menu)
+        public async Task<IActionResult> Edit(int id, [Bind("id,MenuName,MenuEname,MenuDetail,icon")] Menu menu)
         {
             if (id != menu.id)
             {
@@ -97,6 +99,7 @@ namespace aspnetapp.Controllers
             {
                 try
                 {
+                    menu.updatedAt = DateTime.Now;
                     _context.Update(menu);
                     await _context.SaveChangesAsync();
                 }
