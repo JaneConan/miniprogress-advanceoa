@@ -25,7 +25,7 @@ namespace aspnetapp.Controllers.WebApi
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Menu>>> GetMenus()
         {
-            return await _context.Menus.ToListAsync();
+            return await _context.Menus.AsNoTracking().ToListAsync();
         }
 
         // GET: api/Menus/5
