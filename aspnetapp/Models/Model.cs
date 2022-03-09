@@ -36,11 +36,6 @@ namespace aspnetapp
         /// <summary>
         /// 
         /// </summary>
-        public int? MenuNo { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public string? MenuName { get; set; }
 
         /// <summary>
@@ -57,11 +52,6 @@ namespace aspnetapp
         /// 
         /// </summary>
         public string? icon { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string? herf { get; set; }
 
         /// <summary>
         /// 
