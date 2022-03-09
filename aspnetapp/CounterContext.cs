@@ -13,6 +13,8 @@ namespace aspnetapp
         }
         public DbSet<Counter> Counters { get; set; } = null!;
         public DbSet<Menu> Menus { get; set; } = null!;
+        public DbSet<ApletUser> ApletUsers { get; set; } = null!;
+
         public CounterContext(DbContextOptions<CounterContext> options)
             : base(options)
         {
@@ -22,9 +24,9 @@ namespace aspnetapp
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var username = Environment.GetEnvironmentVariable("MYSQL_USERNAME");
-                var password = Environment.GetEnvironmentVariable("MYSQL_PASSWORD");
-                var addressParts = Environment.GetEnvironmentVariable("MYSQL_ADDRESS")?.Split(':');
+                var username = "workpc";
+                var password = "Qn%G5deZ";
+                var addressParts = "sh-cynosdbmysql-grp-1wxhc5so.sql.tencentcdb.com:22189".Split(':');
                 var host = addressParts?[0];
                 var port = addressParts?[1];
                 var connstr = $"server={host};port={port};user={username};password={password};database=aspnet_demo";
@@ -38,11 +40,10 @@ namespace aspnetapp
                 .HasCharSet("utf8");
             modelBuilder.Entity<Counter>().ToTable("Counters");
             modelBuilder.Entity<Menu>().ToTable("Menus");
+            modelBuilder.Entity<ApletUser>().ToTable("ApletUsers");
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-        public DbSet<aspnetapp.Menu> Menu { get; set; }
     }
 }

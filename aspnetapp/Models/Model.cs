@@ -18,4 +18,14 @@ namespace aspnetapp
         public DateTime createdAt { get; set; }
         public DateTime updatedAt { get; set; }
     }
+
+
+    public class ApletUser
+    {
+        public int id { get; set; }
+        public string UserName { get; set; }
+        public string Phone { get; set; }
+        public string Demand { get; set; }
+        public DateTime createdAt { get; set; }
+    }
 }

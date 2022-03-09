@@ -8,24 +8,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using aspnetapp;
 
-namespace aspnetapp.Controllers
+namespace aspnetapp.Controllers.WebUI
 {
-    public class MenusController : Controller
+    public class ApletUsersController : Controller
     {
         private readonly CounterContext _context;
 
-        public MenusController(CounterContext context)
+        public ApletUsersController(CounterContext context)
         {
             _context = context;
         }
 
-        // GET: Menus
+        // GET: ApletUsers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Menus.AsNoTracking().ToListAsync());
+            return View(await _context.ApletUsers.ToListAsync());
         }
 
-        // GET: Menus/Details/5
+        // GET: ApletUsers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,41 +33,39 @@ namespace aspnetapp.Controllers
                 return NotFound();
             }
 
-            var menu = await _context.Menus
+            var apletUser = await _context.ApletUsers
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (menu == null)
+            if (apletUser == null)
             {
                 return NotFound();
             }
 
-            return View(menu);
+            return View(apletUser);
         }
 
-        // GET: Menus/Create
+        // GET: ApletUsers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Menus/Create
+        // POST: ApletUsers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,MenuName,MenuEname,MenuDetail,icon")] Menu menu)
+        public async Task<IActionResult> Create([Bind("id,UserName,Phone,Demand,createdAt")] ApletUser apletUser)
         {
             if (ModelState.IsValid)
             {
-                menu.createdAt = DateTime.Now;
-                menu.updatedAt = DateTime.Now;
-                _context.Add(menu);
+                _context.Add(apletUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(menu);
+            return View(apletUser);
         }
 
-        // GET: Menus/Edit/5
+        // GET: ApletUsers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +73,22 @@ namespace aspnetapp.Controllers
                 return NotFound();
             }
 
-            var menu = await _context.Menus.FindAsync(id);
-            if (menu == null)
+            var apletUser = await _context.ApletUsers.FindAsync(id);
+            if (apletUser == null)
             {
                 return NotFound();
             }
-            return View(menu);
+            return View(apletUser);
         }
 
-        // POST: Menus/Edit/5
+        // POST: ApletUsers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,MenuName,MenuEname,MenuDetail,icon")] Menu menu)
+        public async Task<IActionResult> Edit(int id, [Bind("id,UserName,Phone,Demand,createdAt")] ApletUser apletUser)
         {
-            if (id != menu.id)
+            if (id != apletUser.id)
             {
                 return NotFound();
             }
@@ -99,13 +97,12 @@ namespace aspnetapp.Controllers
             {
                 try
                 {
-                    menu.updatedAt = DateTime.Now;
-                    _context.Update(menu);
+                    _context.Update(apletUser);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MenuExists(menu.id))
+                    if (!ApletUserExists(apletUser.id))
                     {
                         return NotFound();
                     }
@@ -116,10 +113,10 @@ namespace aspnetapp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(menu);
+            return View(apletUser);
         }
 
-        // GET: Menus/Delete/5
+        // GET: ApletUsers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -127,30 +124,30 @@ namespace aspnetapp.Controllers
                 return NotFound();
             }
 
-            var menu = await _context.Menus
+            var apletUser = await _context.ApletUsers
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (menu == null)
+            if (apletUser == null)
             {
                 return NotFound();
             }
 
-            return View(menu);
+            return View(apletUser);
         }
 
-        // POST: Menus/Delete/5
+        // POST: ApletUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var menu = await _context.Menus.FindAsync(id);
-            _context.Menus.Remove(menu);
+            var apletUser = await _context.ApletUsers.FindAsync(id);
+            _context.ApletUsers.Remove(apletUser);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MenuExists(int id)
+        private bool ApletUserExists(int id)
         {
-            return _context.Menus.Any(e => e.id == id);
+            return _context.ApletUsers.Any(e => e.id == id);
         }
     }
 }
