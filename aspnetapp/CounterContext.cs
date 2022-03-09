@@ -13,6 +13,8 @@ namespace aspnetapp
         }
         public DbSet<Counter> Counters { get; set; } = null!;
         public DbSet<Menu> Menus { get; set; } = null!;
+        public DbSet<ApletUser> ApletUsers { get; set; } = null!;
+
         public CounterContext(DbContextOptions<CounterContext> options)
             : base(options)
         {
@@ -38,11 +40,10 @@ namespace aspnetapp
                 .HasCharSet("utf8");
             modelBuilder.Entity<Counter>().ToTable("Counters");
             modelBuilder.Entity<Menu>().ToTable("Menus");
+            modelBuilder.Entity<ApletUser>().ToTable("ApletUsers");
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-        public DbSet<aspnetapp.Menu> Menu { get; set; }
     }
 }

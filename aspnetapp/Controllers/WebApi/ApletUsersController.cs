@@ -12,47 +12,47 @@ namespace aspnetapp.Controllers.WebApi
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MenusController : ControllerBase
+    public class ApletUsersController : ControllerBase
     {
         private readonly CounterContext _context;
 
-        public MenusController(CounterContext context)
+        public ApletUsersController(CounterContext context)
         {
             _context = context;
         }
 
-        // GET: api/Menus
+        // GET: api/ApletUsers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Menu>>> GetMenus()
+        public async Task<ActionResult<IEnumerable<ApletUser>>> GetApletUsers()
         {
-            return await _context.Menus.AsNoTracking().ToListAsync();
+            return await _context.ApletUsers.ToListAsync();
         }
 
-        // GET: api/Menus/5
+        // GET: api/ApletUsers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Menu>> GetMenu(int id)
+        public async Task<ActionResult<ApletUser>> GetApletUser(int id)
         {
-            var menu = await _context.Menus.FindAsync(id);
+            var apletUser = await _context.ApletUsers.FindAsync(id);
 
-            if (menu == null)
+            if (apletUser == null)
             {
                 return NotFound();
             }
 
-            return menu;
+            return apletUser;
         }
 
-        // PUT: api/Menus/5
+        // PUT: api/ApletUsers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMenu(int id, Menu menu)
+        public async Task<IActionResult> PutApletUser(int id, ApletUser apletUser)
         {
-            if (id != menu.id)
+            if (id != apletUser.id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(menu).State = EntityState.Modified;
+            _context.Entry(apletUser).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace aspnetapp.Controllers.WebApi
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MenuExists(id))
+                if (!ApletUserExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,37 @@ namespace aspnetapp.Controllers.WebApi
             return NoContent();
         }
 
-        // POST: api/Menus
+        // POST: api/ApletUsers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Menu>> PostMenu(Menu menu)
+        public async Task<ActionResult<ApletUser>> PostApletUser(ApletUser apletUser)
         {
-            _context.Menus.Add(menu);
+            apletUser.createdAt = DateTime.Now;
+            _context.ApletUsers.Add(apletUser);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMenu", new { id = menu.id }, menu);
+            return CreatedAtAction("GetApletUser", new { id = apletUser.id }, apletUser);
         }
 
-        // DELETE: api/Menus/5
+        // DELETE: api/ApletUsers/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMenu(int id)
+        public async Task<IActionResult> DeleteApletUser(int id)
         {
-            var menu = await _context.Menus.FindAsync(id);
-            if (menu == null)
+            var apletUser = await _context.ApletUsers.FindAsync(id);
+            if (apletUser == null)
             {
                 return NotFound();
             }
 
-            _context.Menus.Remove(menu);
+            _context.ApletUsers.Remove(apletUser);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool MenuExists(int id)
+        private bool ApletUserExists(int id)
         {
-            return _context.Menus.Any(e => e.id == id);
+            return _context.ApletUsers.Any(e => e.id == id);
         }
     }
 }
