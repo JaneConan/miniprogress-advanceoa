@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using aspnetapp;
+using RestSharp;
 
 namespace aspnetapp.Controllers.WebApi
 {
@@ -82,7 +83,19 @@ namespace aspnetapp.Controllers.WebApi
             _context.ApletUsers.Add(apletUser);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetApletUser", new { id = apletUser.id }, apletUser);
+            //post请求
+            var SMS_API = Environment.GetEnvironmentVariable("SMS_API");
+            var client = new RestClient(SMS_API);
+            var request = new RestRequest();
+            request.Method = Method.Post;
+            request.AddHeader("Accept", "application/json");
+            request.AddHeader("Content-Type", "application/json");
+            request.AddJsonBody(new { number = apletUser.Phone, message = "尊敬的" + apletUser.UserName + "，您好。您的需求我们已收到，随后我们会有工作人员和您联系。感谢您的支持！" });
+            // 执行请求
+            var response = await client.PostAsync(request);
+            var content = response.Content; // raw content as string
+
+            return CreatedAtAction("GetApletUser", new { id = apletUser.id, result = content }, apletUser);
         }
 
         // DELETE: api/ApletUsers/5
